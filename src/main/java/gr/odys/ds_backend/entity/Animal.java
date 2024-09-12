@@ -1,50 +1,52 @@
 package gr.odys.ds_backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "animals",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
-        })
+@Table(name = "animals")
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Size(max = 20)
-    private String username;
+    @Pattern(regexp = "MALE|FEMALE", message = "Sex should be MALE or FEMALE")
+    private String sex;
 
     @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
+    @Pattern(regexp = "CAT|DOG", message = "Species should be CAT or DOG")
+    private String animalSpecies;
 
     @NotBlank
-    @Size(max = 120)
-    private String password;
+    @DateTimeFormat
+    private Date birthDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @NotBlank
+    @Size(min = 10, max = 10)
+    private Long microchip;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="citizen_id")
+    private Citizen citizen;
+
+    @OneToMany(mappedBy = "animal")
+    private List<AnimalHealthCheck> healthChecks;
 
     public Animal() {
     }
 
-    public Animal(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
+    public Animal(String sex, String animalSpecies, Date birthDate, Long microchip) {
+        this.sex = sex;
+        this.animalSpecies = animalSpecies;
+        this.birthDate = birthDate;
+        this.microchip = microchip;
     }
 
     public Long getId() {
@@ -55,40 +57,55 @@ public class Animal {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSex() {
+        return sex;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAnimalSpecies() {
+        return animalSpecies;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAnimalSpecies(String animalSpecies) {
+        this.animalSpecies = animalSpecies;
     }
 
-    public String getPassword() {
-        return password;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Long getMicrochip() {
+        return microchip;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setMicrochip(Long microchip) {
+        this.microchip = microchip;
+    }
+
+    public Citizen getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(Citizen citizen) {
+        this.citizen = citizen;
     }
 
     @Override
     public String toString() {
-        return username;
+        return "Animal{" +
+                "id=" + id +
+                ", sex='" + sex + '\'' +
+                ", animalSpecies='" + animalSpecies + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", microchip=" + microchip +
+                ", citizen=" + citizen +
+                '}';
     }
 }

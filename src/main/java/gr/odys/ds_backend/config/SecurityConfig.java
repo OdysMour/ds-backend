@@ -54,6 +54,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
+//                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/students/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )

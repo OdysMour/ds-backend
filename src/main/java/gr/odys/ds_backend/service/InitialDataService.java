@@ -1,9 +1,13 @@
-/*
+
 package gr.odys.ds_backend.service;
+/*
 import com.github.javafaker.Faker;
 import gr.odys.ds_backend.entity.Course;
+*/
 import gr.odys.ds_backend.entity.Role;
+/*
 import gr.odys.ds_backend.entity.Student;
+*/
 import gr.odys.ds_backend.entity.User;
 import gr.odys.ds_backend.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -13,10 +17,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Stream;
 
-*/
+
 /**
  * Service to populate database with initial data.
- *//*
+ */
 
 @Service
 public class InitialDataService {
@@ -28,22 +32,28 @@ public class InitialDataService {
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
+/*
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final AssignmentRepository assignmentRepository;
+*/
     private final PasswordEncoder passwordEncoder;
 
     public InitialDataService(UserRepository userRepository,
                               RoleRepository roleRepository,
+/*
                               StudentRepository studentRepository,
                               CourseRepository courseRepository,
                               AssignmentRepository assignmentRepository,
+*/
                               PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+/*
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.assignmentRepository = assignmentRepository;
+*/
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -86,6 +96,7 @@ public class InitialDataService {
         });
     }
 
+/*
     private void createStudents() {
         for (int i=1; i<=LAST_STUDENT_ID; i++) {
             final Faker faker = new Faker(new Random(i));
@@ -103,7 +114,9 @@ public class InitialDataService {
             });
         }
     }
+*/
 
+/*
     private void createCourses() {
         for (int i=1; i<=LAST_COURSE_ID; i++) {
             final String title = "Course " + i;
@@ -116,7 +129,9 @@ public class InitialDataService {
             });
         }
     }
+*/
 
+/*
     private void createStudentsCourses() {
         final List<Student> studentList = this.studentRepository.findAll();
         for (Student student : studentList) {
@@ -144,12 +159,15 @@ public class InitialDataService {
             this.studentRepository.save(student);
         }
     }
+*/
 
     @PostConstruct
     public void setup() {
         this.createUsersAndRoles();
+/*
         this.createCourses();
         this.createStudents();
         this.createStudentsCourses();
+*/
     }
-}*/
+}

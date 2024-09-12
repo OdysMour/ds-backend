@@ -26,10 +26,10 @@ public class AppConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("DS LAB 2023 REST API")
-                        .description("This API is used in dl-lab-2023 project")
-                        .version("1.0").contact(new Contact().name("Anargyros Tsadimas")
-                                .email("tsadimas@hua.gr").url("https://tsadimas.github.io"))
+                .info(new Info().title("DS BACKEND REST API")
+                        .description("This API is used in ds project")
+                        .version("1.0").contact(new Contact().name("OdysMour")
+                                .email("it21566@hua.gr").url("https://github.com/OdysMour"))
                         .license(new License().name("License of API")
                                 .url("https://swagger.io/license/")));
         return info;
