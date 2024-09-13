@@ -1,6 +1,7 @@
 package gr.odys.ds_backend.config;
 
 import gr.odys.ds_backend.service.UserDetailsServiceImpl;
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,8 +17,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 import org.springframework.util.StringUtils;
 
-
-
 import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
@@ -30,7 +29,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain)
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
