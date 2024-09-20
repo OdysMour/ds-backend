@@ -1,5 +1,6 @@
 
 package gr.odys.ds_backend.service;
+import gr.odys.ds_backend.entity.Citizen;
 /*
 import com.github.javafaker.Faker;
 import gr.odys.ds_backend.entity.Course;
@@ -9,6 +10,7 @@ import gr.odys.ds_backend.entity.Role;
 import gr.odys.ds_backend.entity.Student;
 */
 import gr.odys.ds_backend.entity.User;
+import gr.odys.ds_backend.entity.UserProfile;
 import gr.odys.ds_backend.repository.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +32,8 @@ public class InitialDataService {
     private static final int LAST_STUDENT_COURSE_ID = 10;
 
     private final UserRepository userRepository;
-
+    private final UserProfileRepository userProfileRepository;
+    private final CitizenRepository citizenRepository;
     private final RoleRepository roleRepository;
 /*
     private final StudentRepository studentRepository;
@@ -41,6 +44,8 @@ public class InitialDataService {
 
     public InitialDataService(UserRepository userRepository,
                               RoleRepository roleRepository,
+                              UserProfileRepository userProfileRepository,
+                              CitizenRepository citizenRepository,
 /*
                               StudentRepository studentRepository,
                               CourseRepository courseRepository,
@@ -49,6 +54,8 @@ public class InitialDataService {
                               PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userProfileRepository = userProfileRepository;
+        this.citizenRepository = citizenRepository;
 /*
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
@@ -71,6 +78,16 @@ public class InitialDataService {
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_USER").orElseThrow());
             user.setRoles(roles);
+            UserProfile profile = new UserProfile();
+            Citizen citizen = new Citizen();
+            citizen.setFirstName("User");
+            citizen.setLastName("User");
+            citizen.setPhone(1234567890L);
+            citizen.setCity("Athens");
+            citizenRepository.save(citizen);
+            profile.setCitizen(citizen);
+            userProfileRepository.save(profile);
+            user.setProfile(profile);
             userRepository.save(user);
             return null;
         });
@@ -79,6 +96,17 @@ public class InitialDataService {
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_VET").orElseThrow());
             user.setRoles(roles);
+            UserProfile profile = new UserProfile();
+            Citizen citizen = new Citizen();
+            citizen.setFirstName("Vet");
+            citizen.setLastName("Vet");
+            citizen.setPhone(1234567890L);
+            citizen.setCity("Athens");
+            citizenRepository.save(citizen);
+            profile.setCitizen(citizen);
+            userProfileRepository.save(profile);
+            user.setProfile(profile);
+
             userRepository.save(user);
             return null;
         });
@@ -90,6 +118,16 @@ public class InitialDataService {
             roles.add(this.roleRepository.findByName("ROLE_ADMIN").orElseThrow());
             roles.add(this.roleRepository.findByName("ROLE_VET").orElseThrow());
             user.setRoles(roles);
+            UserProfile profile = new UserProfile();
+            Citizen citizen = new Citizen();
+            citizen.setFirstName("Admin");
+            citizen.setLastName("Admin");
+            citizen.setPhone(1234567890L);
+            citizen.setCity("Athens");
+            citizenRepository.save(citizen);
+            profile.setCitizen(citizen);
+            userProfileRepository.save(profile);
+            user.setProfile(profile);
             userRepository.save(user);
             return null;
         });
@@ -98,6 +136,16 @@ public class InitialDataService {
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_EMPLOYEE").orElseThrow());
             user.setRoles(roles);
+            UserProfile profile = new UserProfile();
+            Citizen citizen = new Citizen();
+            citizen.setFirstName("Employee");
+            citizen.setLastName("Employee");
+            citizen.setPhone(1234567890L);
+            citizen.setCity("Athens");
+            citizenRepository.save(citizen);
+            profile.setCitizen(citizen);
+            userProfileRepository.save(profile);
+            user.setProfile(profile);
             userRepository.save(user);
             return null;
         });

@@ -3,6 +3,7 @@ package gr.odys.ds_backend.controller;
 import gr.odys.ds_backend.config.JwtUtils;
 import gr.odys.ds_backend.entity.Role;
 import gr.odys.ds_backend.entity.User;
+import gr.odys.ds_backend.entity.UserProfile;
 import gr.odys.ds_backend.payload.request.LoginRequest;
 import gr.odys.ds_backend.payload.request.SignupRequest;
 import gr.odys.ds_backend.payload.response.JwtResponse;
@@ -126,6 +127,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        user.setProfile(new UserProfile());
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

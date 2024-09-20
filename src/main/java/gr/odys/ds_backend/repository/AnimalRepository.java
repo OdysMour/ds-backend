@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(path = "animals")
 //@Hidden
 public interface AnimalRepository extends JpaRepository<Animal, Integer> {
+    
 }

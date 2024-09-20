@@ -3,7 +3,6 @@ package gr.odys.ds_backend.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -24,12 +23,10 @@ public class Animal {
     @Pattern(regexp = "CAT|DOG", message = "Species should be CAT or DOG")
     private String animalSpecies;
 
-    @NotBlank
     @DateTimeFormat
     private Date birthDate;
 
-    @NotBlank
-    @Size(min = 10, max = 10)
+    
     private Long microchip;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

@@ -95,4 +95,12 @@ public class User {
     public String toString() {
         return username;
     }
+
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+    }
 }

@@ -20,8 +20,6 @@ public class Citizen {
     @NotBlank
     private String lastName;
 
-    @NotBlank
-    @Size(min = 10, max = 10)
     private Long phone;
 
     @NotBlank
@@ -64,11 +62,11 @@ public class Citizen {
         this.lastName = lastName;
     }
 
-    public @NotBlank @Size(min = 10, max = 10) Long getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(@NotBlank @Size(min = 10, max = 10) Long phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
