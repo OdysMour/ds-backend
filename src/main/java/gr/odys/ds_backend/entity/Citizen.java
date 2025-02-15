@@ -2,31 +2,35 @@ package gr.odys.ds_backend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "citizens")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Citizen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "First name is required")
+    @Column(nullable = false)
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last name is required")
+    @Column(nullable = false)
     private String lastName;
 
+    @Column
     private Long phone;
 
-    @NotBlank
+    @Column
     private String city;
 
-    @OneToMany(mappedBy="citizen", cascade = CascadeType.ALL)
-    private List<Animal> animals;
+    @OneToOne(mappedBy = "citizen")
+    @JsonManagedReference("citizen-profile")
+    private UserProfile userProfile;
 
     public Citizen(String firstName, String lastName, Long phone, String city) {
         this.firstName = firstName;
@@ -46,19 +50,19 @@ public class Citizen {
         this.id = id;
     }
 
-    public @NotBlank String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(@NotBlank String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public @NotBlank String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(@NotBlank String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -70,19 +74,30 @@ public class Citizen {
         this.phone = phone;
     }
 
-    public @NotBlank String getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(@NotBlank String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public List<Animal> getAnimals() {
-        return animals;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 
-    public void setAnimals(List<Animal> animals) {
-        this.animals = animals;
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone=" + phone +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

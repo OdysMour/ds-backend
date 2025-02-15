@@ -1,23 +1,16 @@
 
 package gr.odys.ds_backend.service;
-import gr.odys.ds_backend.entity.Citizen;
 /*
 import com.github.javafaker.Faker;
 import gr.odys.ds_backend.entity.Course;
 */
 import gr.odys.ds_backend.entity.Role;
-/*
-import gr.odys.ds_backend.entity.Student;
-*/
-import gr.odys.ds_backend.entity.User;
-import gr.odys.ds_backend.entity.UserProfile;
 import gr.odys.ds_backend.repository.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 
 /**
@@ -27,12 +20,18 @@ import java.util.stream.Stream;
 @Service
 public class InitialDataService {
 
-    private static final int LAST_STUDENT_ID = 10;
+    @SuppressWarnings("unused")
+	private static final int LAST_STUDENT_ID = 10;
+    @SuppressWarnings("unused")
     private static final int LAST_COURSE_ID = 10;
+    @SuppressWarnings("unused")
     private static final int LAST_STUDENT_COURSE_ID = 10;
 
+    @SuppressWarnings("unused")
     private final UserRepository userRepository;
+    @SuppressWarnings("unused")
     private final UserProfileRepository userProfileRepository;
+    @SuppressWarnings("unused")
     private final CitizenRepository citizenRepository;
     private final RoleRepository roleRepository;
 /*
@@ -40,6 +39,7 @@ public class InitialDataService {
     private final CourseRepository courseRepository;
     private final AssignmentRepository assignmentRepository;
 */
+    @SuppressWarnings("unused")
     private final PasswordEncoder passwordEncoder;
 
     public InitialDataService(UserRepository userRepository,
@@ -64,6 +64,7 @@ public class InitialDataService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @jakarta.transaction.Transactional
     private void createUsersAndRoles() {
         final List<String> rolesToCreate = List.of("ROLE_ADMIN", "ROLE_VET", "ROLE_USER", "ROLE_EMPLOYEE");
         for (final String roleName : rolesToCreate) {
@@ -72,22 +73,25 @@ public class InitialDataService {
                 return null;
             });
         }
+/*
 
         this.userRepository.findByUsername("user").orElseGet(() -> {
             User user = new User("user", "user@hua.gr", this.passwordEncoder.encode("12345678"));
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_USER").orElseThrow());
             user.setRoles(roles);
-            UserProfile profile = new UserProfile();
+
             Citizen citizen = new Citizen();
             citizen.setFirstName("User");
             citizen.setLastName("User");
             citizen.setPhone(1234567890L);
             citizen.setCity("Athens");
-            citizenRepository.save(citizen);
+            citizen = citizenRepository.save(citizen);
+
+            UserProfile profile = new UserProfile();
             profile.setCitizen(citizen);
-            userProfileRepository.save(profile);
             user.setProfile(profile);
+
             userRepository.save(user);
             return null;
         });
@@ -96,15 +100,16 @@ public class InitialDataService {
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_VET").orElseThrow());
             user.setRoles(roles);
-            UserProfile profile = new UserProfile();
+
             Citizen citizen = new Citizen();
             citizen.setFirstName("Vet");
             citizen.setLastName("Vet");
             citizen.setPhone(1234567890L);
             citizen.setCity("Athens");
-            citizenRepository.save(citizen);
+            citizen = citizenRepository.save(citizen);
+
+            UserProfile profile = new UserProfile();
             profile.setCitizen(citizen);
-            userProfileRepository.save(profile);
             user.setProfile(profile);
 
             userRepository.save(user);
@@ -118,16 +123,18 @@ public class InitialDataService {
             roles.add(this.roleRepository.findByName("ROLE_ADMIN").orElseThrow());
             roles.add(this.roleRepository.findByName("ROLE_VET").orElseThrow());
             user.setRoles(roles);
-            UserProfile profile = new UserProfile();
+
             Citizen citizen = new Citizen();
             citizen.setFirstName("Admin");
             citizen.setLastName("Admin");
             citizen.setPhone(1234567890L);
             citizen.setCity("Athens");
-            citizenRepository.save(citizen);
+            citizen = citizenRepository.save(citizen);
+
+            UserProfile profile = new UserProfile();
             profile.setCitizen(citizen);
-            userProfileRepository.save(profile);
             user.setProfile(profile);
+
             userRepository.save(user);
             return null;
         });
@@ -136,19 +143,21 @@ public class InitialDataService {
             Set<Role> roles = new HashSet<>();
             roles.add(this.roleRepository.findByName("ROLE_EMPLOYEE").orElseThrow());
             user.setRoles(roles);
-            UserProfile profile = new UserProfile();
+
             Citizen citizen = new Citizen();
             citizen.setFirstName("Employee");
             citizen.setLastName("Employee");
             citizen.setPhone(1234567890L);
             citizen.setCity("Athens");
-            citizenRepository.save(citizen);
+            citizen = citizenRepository.save(citizen);
+
+            UserProfile profile = new UserProfile();
             profile.setCitizen(citizen);
-            userProfileRepository.save(profile);
             user.setProfile(profile);
+
             userRepository.save(user);
             return null;
-        });
+        });*/
     }
 
 /*
@@ -217,6 +226,7 @@ public class InitialDataService {
 */
 
     @PostConstruct
+    @jakarta.transaction.Transactional
     public void setup() {
         this.createUsersAndRoles();
 /*

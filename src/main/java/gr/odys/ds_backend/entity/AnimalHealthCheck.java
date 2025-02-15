@@ -2,24 +2,30 @@ package gr.odys.ds_backend.entity;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
 
 @Entity
+@Table(name = "animal_health_checks")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AnimalHealthCheck {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "animal_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id", nullable = false)
+    @JsonBackReference("animal-healthchecks")
     private Animal animal;
 
     public AnimalHealthCheck() {
@@ -38,11 +44,36 @@ public class AnimalHealthCheck {
         this.animal = animal;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "AnimalHealthCheck{" +
+                "id=" + id +
+                ", created=" + created +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

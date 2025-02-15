@@ -1,0 +1,537 @@
+{
+  "info": {
+    "_postman_id": "master-98765432-9876-9876-9876-987654321098",
+    "name": "DS Backend API",
+    "description": "Complete API collection for DS Backend application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "description": "Authentication endpoints must be run first to get tokens",
+      "item": [
+        {
+          "name": "Admin Signup (Skip if exists)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData && jsonData.id) {",
+                  "        pm.environment.set('testUserId', jsonData.id);",
+                  "        console.log('User ID set:', jsonData.id);",
+                  "    }",
+                  "} else if (pm.response.code === 409) {",
+                  "    console.log('Admin user already exists - continuing...');",
+                  "} else {",
+                  "    console.error('Unexpected response:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Admin\",\n    \"lastName\": \"User\",\n    \"email\": \"admin@hua.gr\",\n    \"password\": \"{{adminPassword}}\",\n    \"role\": [\"admin\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Vet Signup (Skip if exists)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    console.log('Vet user created successfully');",
+                  "} else if (pm.response.code === 409) {",
+                  "    console.log('Vet user already exists - continuing...');",
+                  "} else {",
+                  "    console.error('Unexpected response:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Vet\",\n    \"lastName\": \"User\",\n    \"email\": \"vet@hua.gr\",\n    \"password\": \"{{vetPassword}}\",\n    \"role\": [\"vet\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            }
+          }
+        },
+        {
+          "name": "User Signup (Skip if exists)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    console.log('Regular user created successfully');",
+                  "} else if (pm.response.code === 409) {",
+                  "    console.log('Regular user already exists - continuing...');",
+                  "} else {",
+                  "    console.error('Unexpected response:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Regular\",\n    \"lastName\": \"User\",\n    \"email\": \"user@hua.gr\",\n    \"password\": \"{{userPassword}}\",\n    \"role\": [\"user\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Admin Signin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.accessToken) {",
+                  "    pm.environment.set('adminToken', jsonData.accessToken);",
+                  "    console.log('Admin token set successfully');",
+                  "} else {",
+                  "    console.error('Failed to set admin token');",
+                  "    tests['Admin token set'] = false;",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin.user\",\n    \"password\": \"{{adminPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signin"]
+            }
+          }
+        },
+        {
+          "name": "Vet Signin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.accessToken) {",
+                  "    pm.environment.set('vetToken', jsonData.accessToken);",
+                  "    console.log('Vet token set successfully');",
+                  "} else {",
+                  "    console.error('Failed to set vet token');",
+                  "    tests['Vet token set'] = false;",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"vet.user\",\n    \"password\": \"{{vetPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signin"]
+            }
+          }
+        },
+        {
+          "name": "User Signin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.accessToken) {",
+                  "    pm.environment.set('userToken', jsonData.accessToken);",
+                  "    console.log('User token set successfully');",
+                  "} else {",
+                  "    console.error('Failed to set user token');",
+                  "    tests['User token set'] = false;",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"regular.user\",\n    \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signin"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. User Management",
+      "description": "User and profile management endpoints",
+      "item": [
+        {
+          "name": "Get All Users (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('Successfully retrieved users');",
+                  "} else {",
+                  "    console.error('Failed to get users:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Citizen Management",
+      "description": "Citizen-related endpoints",
+      "item": [
+        {
+          "name": "Get All Citizens",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('Successfully retrieved citizens');",
+                  "} else {",
+                  "    console.error('Failed to get citizens:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/citizens",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "citizens"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. User Profile Management",
+      "description": "User Profile related endpoints",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('Successfully retrieved user profile');",
+                  "} else {",
+                  "    console.error('Failed to get user profile:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/user-profiles/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user-profiles", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Animal Management", 
+      "description": "Animal and health check endpoints",
+      "item": [
+        {
+          "name": "Create Animal (Vet)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData && jsonData.id) {",
+                  "        pm.environment.set('testAnimalId', jsonData.id);",
+                  "        console.log('Animal ID set:', jsonData.id);",
+                  "    }",
+                  "} else {",
+                  "    console.error('Failed to create animal:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vetToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Max\",\n    \"animalSpecies\": \"DOG\",\n    \"breed\": \"German Shepherd\",\n    \"sex\": \"MALE\",\n    \"birthDate\": \"2020-01-01\",\n    \"microchip\": 123456789,\n    \"healthStatus\": \"Healthy\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/animals",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "animals"]
+            }
+          }
+        },
+        {
+          "name": "Create Health Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData && jsonData.id) {",
+                  "        pm.environment.set('testHealthCheckId', jsonData.id);",
+                  "        console.log('Health Check ID set:', jsonData.id);",
+                  "    }",
+                  "} else {",
+                  "    console.error('Failed to create health check:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vetToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"description\": \"Regular checkup - all vitals normal. Weight: 30kg. Temperature: 38.5°C\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/health-checks/animal/{{testAnimalId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health-checks", "animal", "{{testAnimalId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Animal Health Checks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('Successfully retrieved health checks');",
+                  "} else {",
+                  "    console.error('Failed to get health checks:', pm.response.code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vetToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/health-checks/animal/{{testAnimalId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health-checks", "animal", "{{testAnimalId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

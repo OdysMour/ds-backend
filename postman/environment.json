@@ -1,0 +1,97 @@
+{
+  "id": "12345678-1234-1234-1234-123456789012",
+  "name": "DS Backend Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:9090",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminUsername",
+      "value": "admin",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminPassword",
+      "value": "Admin1234!@",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "vetUsername",
+      "value": "vet",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "vetPassword",
+      "value": "Vet1234!@",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "userUsername",
+      "value": "user",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "userPassword",
+      "value": "User1234!@",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "vetToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "userToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "testAnimalId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testCitizenId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testProfileId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testUserId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testHealthCheckId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
