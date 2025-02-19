@@ -108,15 +108,17 @@ public class AnimalApi {
             Long userProfileId = userProfileRepository.findByUserId(userDetails.getId()).getId();
             UserProfile userProfile = userProfileRepository.getReferenceById(userProfileId);
 
-            // Update allowed fields
-            animal.setName(animalDetails.getName());
-            animal.setAnimalSpecies(animalDetails.getAnimalSpecies());
-            animal.setBreed(animalDetails.getBreed());
-            animal.setSex(animalDetails.getSex());
-            animal.setBirthDate(animalDetails.getBirthDate());
-            animal.setMicrochip(animalDetails.getMicrochip());
+            // Update only non-null fields
+            if (animalDetails.getName() != null) animal.setName(animalDetails.getName());
+            if (animalDetails.getAnimalSpecies() != null) animal.setAnimalSpecies(animalDetails.getAnimalSpecies());
+            if (animalDetails.getBreed() != null) animal.setBreed(animalDetails.getBreed());
+            if (animalDetails.getSex() != null) animal.setSex(animalDetails.getSex());
+            if (animalDetails.getBirthDate() != null) animal.setBirthDate(animalDetails.getBirthDate());
+            if (animalDetails.getMicrochip() != null) animal.setMicrochip(animalDetails.getMicrochip());
+            if (animalDetails.getHealthStatus() != null) animal.setHealthStatus(animalDetails.getHealthStatus());
+            
+            // Always update last modified by
             animal.setLastModifiedBy(userDetails.getUsername());
-            animal.setUserProfile(userProfile);
             
             Animal updatedAnimal = animalRepository.save(animal);
             return ResponseEntity.ok(new AnimalDTO(updatedAnimal));

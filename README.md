@@ -26,10 +26,20 @@ This Spring Boot backend application provides a RESTful API for managing pet ins
 ```
 src/main/java/gr/odys/ds_backend/
 ├── api/                  # API interfaces
+│   ├── AnimalApi
+│   ├── AnimalHealthCheckApi
+│   ├── CitizenApi
+│   ├── UserApi
+│   └── UserProfileApi
 ├── config/              # Configuration classes
+│   ├── Security configs
+│   ├── JWT utils
+│   └── Rate limiting
 ├── controller/          # REST controllers
 ├── entity/              # JPA entities
 ├── payload/             # Request/Response DTOs
+│   ├── request/        # Request objects
+│   └── response/       # Response objects
 ├── repository/          # Spring Data repositories
 └── service/             # Business logic services
 ```
@@ -37,7 +47,7 @@ src/main/java/gr/odys/ds_backend/
 ## Key Features
 
 - JWT-based Authentication
-- Role-based Access Control (ADMIN, USER)
+- Role-based Access Control (ADMIN, VET, USER)
 - Rate Limiting
 - REST API for:
   - User Management
@@ -61,7 +71,7 @@ src/main/java/gr/odys/ds_backend/
 
 4. Build and run the application:
    ```bash
-   ./mvnw spring-boot:run
+   export $(grep -v '^#' .env | xargs) && ./mvnw spring-boot:run
    ```
 
 The server will start on `http://localhost:8080`
@@ -94,6 +104,20 @@ The server will start on `http://localhost:8080`
 - `PUT /api/users/{id}` - Update user information
 - `DELETE /api/users/{id}` - Delete user (Admin only)
 
+### User Profile Management
+
+- `GET /api/users/{id}/profile` - Get user profile
+- `PUT /api/users/{id}/profile` - Update user profile
+- `DELETE /api/users/{id}/profile` - Delete user profile
+
+### Citizen Management
+
+- `GET /api/citizens` - List all citizens
+- `POST /api/citizens` - Create new citizen
+- `GET /api/citizens/{id}` - Get citizen details
+- `PUT /api/citizens/{id}` - Update citizen information
+- `DELETE /api/citizens/{id}` - Delete citizen
+
 ## Security
 
 The application implements several security measures:
@@ -110,18 +134,22 @@ The application implements several security measures:
 ### Running Tests
 
 ```bash
-./mvnw test
+export $(grep -v '^#' .env | xargs) && ./mvnw test
 ```
 
 ### Building for Production
 
 ```bash
-./mvnw clean package
+export $(grep -v '^#' .env | xargs) && ./mvnw clean package
 ```
 
 ### API Testing
 
 A Postman collection is included in the `postman` directory for testing the APIs.
+
+```bash
+newman run collection.json -e environment.json
+```
 
 ## Environment Variables
 
